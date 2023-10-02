@@ -9,5 +9,8 @@ class MainActivity:Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        var findViewById = findViewById<TextView>(R.id.nome)
+        findViewById.setText("Abacate")
     }
 }
