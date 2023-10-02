@@ -23,3 +23,11 @@ class MainActivity:Activity() {
 
     }
 }
+
+/*
+* RecyclerView
+* passo 1:
+* Criar item que será modelo da Recycler view
+*
+* Passo 2: Adicionar A RecyclerView no viewGroup  Desejado
+* */
