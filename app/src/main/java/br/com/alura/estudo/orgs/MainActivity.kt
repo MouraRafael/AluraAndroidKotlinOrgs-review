@@ -2,14 +2,14 @@ package br.com.alura.estudo.orgs
 
 import android.app.Activity
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View
+import android.widget.TextView
 
-class MainActivity:AppCompatActivity() {
+class MainActivity:Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Toast.makeText(this,"Boas Vindas",Toast.LENGTH_LONG).show()
+        val view = TextView(this)
+        view.setText("Cesta de frutas")
+        setContentView(view)
     }
 }
