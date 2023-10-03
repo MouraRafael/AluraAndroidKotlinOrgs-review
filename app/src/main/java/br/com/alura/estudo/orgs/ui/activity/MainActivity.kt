@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet.Layout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,28 +16,26 @@ import br.com.alura.estudo.orgs.ui.adapter.ListaProdutosAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.math.BigDecimal
 
-class MainActivity:Activity() {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
 
         val dao = ProdutosDao()
-//        val nome: TextView = findViewById<TextView>(R.id.nome)
-//        nome.text = "Cesta de Futas"
-//
-//        val descricao = findViewById<TextView>(R.id.descricao)
-//        descricao.text = "Laranja, maçã e uva"
-//
-//        val valor:TextView = findViewById(R.id.valor)
-//        valor.text = "19,99"
 
-        val recyclerView:RecyclerView = findViewById(R.id.recycler_view)
+        val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
         recyclerView.adapter = ListaProdutosAdapter(
             context = this,
             produtos = dao.buscaTodos()
         )
 
-        recyclerView.layoutManager = LinearLayoutManager(this,RecyclerView.VERTICAL,false)
+        recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
         //findViewById<TextView>(R.id.nome).setTextSize(TypedValue.COMPLEX_UNIT_SP,25.5f)
 
@@ -46,7 +45,6 @@ class MainActivity:Activity() {
             startActivity(intent)
 
         }
-
     }
 }
 

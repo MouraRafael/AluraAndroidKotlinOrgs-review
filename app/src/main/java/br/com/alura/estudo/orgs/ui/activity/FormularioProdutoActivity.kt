@@ -50,6 +50,7 @@ class FormularioProdutoActivity : AppCompatActivity(R.layout.activity_formulario
             Log.i("FormProduto", "onCreate $produto")
             Log.i("FormProduto", "onCreate ${dao.buscaTodos()}")
 
+
         } //Listener antigo
 
     }
