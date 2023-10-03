@@ -28,6 +28,7 @@ class ListaProdutosAdapter(private val context: Context, produtos: List<Produto>
             binding.produtoItemValor.text = valorFormatadoEmMoeda
             //binding.imageView.load("https://www.cleverfiles.com/howto/wp-content/uploads/2018/03/minion.jpg")
             //binding.imageView.load(R.drawable.imagem_padrao)
+            binding.imageView.load(produto.imagem)
 
         }
 

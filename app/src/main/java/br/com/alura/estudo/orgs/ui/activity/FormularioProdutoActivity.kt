@@ -19,6 +19,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
     val binding by lazy {
         ActivityFormularioProdutoBinding.inflate(layoutInflater)
     }
+    private var url:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +29,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
             val bindingDoFormularioImagem = FormularioImagemBinding.inflate(layoutInflater);
 
             bindingDoFormularioImagem.formularioImagemBotaoCarregar.setOnClickListener {
-                val url = bindingDoFormularioImagem.formularioImagemUrl.text.toString()
+                url = bindingDoFormularioImagem.formularioImagemUrl.text.toString()
                 bindingDoFormularioImagem.formularioImagemImageview.load(url)
             }
 
@@ -80,7 +81,8 @@ class FormularioProdutoActivity : AppCompatActivity() {
         return Produto(
             nome,
             descricao,
-            valor
+            valor,
+            url
         )
     }
 }
