@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.alura.estudo.orgs.R
 import br.com.alura.estudo.orgs.databinding.ProdutoItemBinding
 import br.com.alura.estudo.orgs.model.Produto
+import br.com.alura.estudo.orgs.tentaCarregarImagem
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
@@ -57,12 +58,7 @@ class ListaProdutosAdapter(private val context: Context, produtos: List<Produto>
 
             binding.imageView.visibility = visibilidade
 
-            binding.imageView.load(produto.imagem, imageLoader) {
-                placeholder(R.drawable.imagem_padrao)
-                //fallback(R.drawable.erro)
-                error(R.drawable.erro)
-
-            }
+            binding.imageView.tentaCarregarImagem(produto.imagem, imageLoader)
 
         }
 

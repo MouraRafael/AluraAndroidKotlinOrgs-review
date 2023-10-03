@@ -9,6 +9,7 @@ import br.com.alura.estudo.orgs.dao.ProdutosDao
 import br.com.alura.estudo.orgs.databinding.ActivityFormularioProdutoBinding
 import br.com.alura.estudo.orgs.databinding.FormularioImagemBinding
 import br.com.alura.estudo.orgs.model.Produto
+import br.com.alura.estudo.orgs.tentaCarregarImagem
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
@@ -42,14 +43,14 @@ class FormularioProdutoActivity : AppCompatActivity() {
 
             bindingDoFormularioImagem.formularioImagemBotaoCarregar.setOnClickListener {
                 url = bindingDoFormularioImagem.formularioImagemUrl.text.toString()
-                bindingDoFormularioImagem.formularioImagemImageview.load(url,imageLoader)
+                bindingDoFormularioImagem.formularioImagemImageview.tentaCarregarImagem(url,imageLoader)
             }
 
             AlertDialog.Builder(this)
                 .setView(bindingDoFormularioImagem.root)
                 .setPositiveButton("ok", { _, _ ->
                     val  url = bindingDoFormularioImagem.formularioImagemUrl.text.toString()
-                    binding.activityFormularioProdutoImagem.load(url,imageLoader)
+                    binding.activityFormularioProdutoImagem.tentaCarregarImagem(url,imageLoader)
                 })
                 .setNegativeButton("nop", { _, _ -> })
                 .show()
