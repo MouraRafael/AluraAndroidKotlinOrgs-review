@@ -10,6 +10,7 @@ import br.com.alura.estudo.orgs.databinding.ActivityFormularioProdutoBinding
 import br.com.alura.estudo.orgs.databinding.FormularioImagemBinding
 import br.com.alura.estudo.orgs.model.Produto
 import br.com.alura.estudo.orgs.tentaCarregarImagem
+import br.com.alura.estudo.orgs.ui.dialog.FormularioImagemDialog
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
@@ -27,33 +28,9 @@ class FormularioProdutoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-        val imageLoader = ImageLoader.Builder(this)
-            .components {
-                if (SDK_INT >= 28) {
-                    add(ImageDecoderDecoder.Factory())
-                } else {
-                    add(GifDecoder.Factory())
-                }
-            }
-            .build()
         configuraBotaoSalvar()
         binding.activityFormularioProdutoImagem.setOnClickListener {
-            val bindingDoFormularioImagem = FormularioImagemBinding.inflate(layoutInflater);
-
-            bindingDoFormularioImagem.formularioImagemBotaoCarregar.setOnClickListener {
-                url = bindingDoFormularioImagem.formularioImagemUrl.text.toString()
-                bindingDoFormularioImagem.formularioImagemImageview.tentaCarregarImagem(url,imageLoader)
-            }
-
-            AlertDialog.Builder(this)
-                .setView(bindingDoFormularioImagem.root)
-                .setPositiveButton("ok", { _, _ ->
-                    val  url = bindingDoFormularioImagem.formularioImagemUrl.text.toString()
-                    binding.activityFormularioProdutoImagem.tentaCarregarImagem(url,imageLoader)
-                })
-                .setNegativeButton("nop", { _, _ -> })
-                .show()
+            FormularioImagemDialog(this).mostra()
         }
 
     }
