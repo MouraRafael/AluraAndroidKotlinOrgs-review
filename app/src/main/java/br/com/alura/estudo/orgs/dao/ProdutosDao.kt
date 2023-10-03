@@ -14,7 +14,25 @@ class ProdutosDao {
 
     companion object {
         private val produtos = mutableListOf<Produto>(
+            Produto("Salada de Frutas","Laranja, Maçãs e uva", BigDecimal("19.83")),
+            Produto("Salada de Frutas","Laranja, Maçãs e uva", BigDecimal("19.83")),
+            Produto("Salada de Frutas","Laranja, Maçãs e uva", BigDecimal("19.83")),
+            Produto("Salada de Frutas","Laranja, Maçãs e uva", BigDecimal("19.83")),
+            Produto("Salada de Frutas","Laranja, Maçãs e uva", BigDecimal("19.83")),
+            Produto("Salada de Frutas","Laranja, Maçãs e uva", BigDecimal("19.83")),
+            Produto("Salada de Frutas","Laranja, Maçãs e uva", BigDecimal("19.83")),
+            Produto("Salada de Frutas","Laranja, Maçãs e uva", BigDecimal("19.83")),
+            Produto("Salada de Frutas","Laranja, Maçãs e uva", BigDecimal("19.83")),
+            Produto("Salada de Frutas","Laranja, Maçãs e uva", BigDecimal("19.83")),
+            Produto("Salada de Frutas","Laranja, Maçãs e uva", BigDecimal("19.83")),
+            Produto("Salada de Frutas","Laranja, Maçãs e uva", BigDecimal("19.83")),
+            Produto("Salada de Frutas","Laranja, Maçãs e uva", BigDecimal("19.83")),
+            Produto("Salada de Frutas","Laranja, Maçãs e uva", BigDecimal("19.83")),
+            Produto("Salada de Frutas","Laranja, Maçãs e uva", BigDecimal("19.83")),
+            Produto("Salada de Frutas","Laranja, Maçãs e uva", BigDecimal("19.83")),
+            Produto("Salada de Frutas","Laranja, Maçãs e uva", BigDecimal("19.83")),
             Produto("Salada de Frutas","Laranja, Maçãs e uva", BigDecimal("19.83"))
+
         )
     }
 }
