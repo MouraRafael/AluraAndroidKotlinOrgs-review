@@ -1,16 +1,17 @@
 package br.com.alura.estudo.orgs.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
-import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
-import br.com.alura.estudo.orgs.R
+import androidx.appcompat.app.AppCompatActivity
 import br.com.alura.estudo.orgs.dao.ProdutosDao
 import br.com.alura.estudo.orgs.databinding.ActivityFormularioProdutoBinding
 import br.com.alura.estudo.orgs.databinding.FormularioImagemBinding
 import br.com.alura.estudo.orgs.model.Produto
+import coil.ImageLoader
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
 import coil.load
 import java.math.BigDecimal
 
@@ -21,23 +22,34 @@ class FormularioProdutoActivity : AppCompatActivity() {
     }
     private var url:String? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        val imageLoader = ImageLoader.Builder(this)
+            .components {
+                if (SDK_INT >= 28) {
+                    add(ImageDecoderDecoder.Factory())
+                } else {
+                    add(GifDecoder.Factory())
+                }
+            }
+            .build()
         configuraBotaoSalvar()
         binding.activityFormularioProdutoImagem.setOnClickListener {
             val bindingDoFormularioImagem = FormularioImagemBinding.inflate(layoutInflater);
 
             bindingDoFormularioImagem.formularioImagemBotaoCarregar.setOnClickListener {
                 url = bindingDoFormularioImagem.formularioImagemUrl.text.toString()
-                bindingDoFormularioImagem.formularioImagemImageview.load(url)
+                bindingDoFormularioImagem.formularioImagemImageview.load(url,imageLoader)
             }
 
             AlertDialog.Builder(this)
                 .setView(bindingDoFormularioImagem.root)
                 .setPositiveButton("ok", { _, _ ->
                     val  url = bindingDoFormularioImagem.formularioImagemUrl.text.toString()
-                    binding.activityFormularioProdutoImagem.load(url)
+                    binding.activityFormularioProdutoImagem.load(url,imageLoader)
                 })
                 .setNegativeButton("nop", { _, _ -> })
                 .show()

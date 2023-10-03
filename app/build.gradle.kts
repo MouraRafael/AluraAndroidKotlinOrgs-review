@@ -50,6 +50,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
 
     implementation("io.coil-kt:coil:2.4.0")
+    implementation("io.coil-kt:coil-gif:2.4.0")
 
 
 }
