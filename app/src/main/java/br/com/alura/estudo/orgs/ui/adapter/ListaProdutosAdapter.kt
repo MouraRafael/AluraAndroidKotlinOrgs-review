@@ -16,11 +16,11 @@ class ListaProdutosAdapter(private val context: Context, produtos: List<Produto>
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun vincula(produto: Produto) {
-            val nome = itemView.findViewById<TextView>(R.id.nome)
+            val nome = itemView.findViewById<TextView>(R.id.produto_item_nome)
             nome.text = produto.nome;
 
-            itemView.findViewById<TextView>(R.id.descricao).text = produto.descricao
-            itemView.findViewById<TextView>(R.id.valor).text = produto.preco.toPlainString()
+            itemView.findViewById<TextView>(R.id.produto_item_descricao).text = produto.descricao
+            itemView.findViewById<TextView>(R.id.produto_item_valor).text = produto.preco.toPlainString()
 
         }
 
