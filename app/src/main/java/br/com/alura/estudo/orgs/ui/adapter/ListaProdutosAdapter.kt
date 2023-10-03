@@ -1,6 +1,7 @@
 package br.com.alura.estudo.orgs.ui.adapter
 
 import android.content.Context
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.alura.estudo.orgs.R
 import br.com.alura.estudo.orgs.databinding.ProdutoItemBinding
 import br.com.alura.estudo.orgs.model.Produto
+import coil.ImageLoader
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
 import coil.load
 import java.text.NumberFormat
 import java.util.Locale
@@ -17,7 +21,18 @@ class ListaProdutosAdapter(private val context: Context, produtos: List<Produto>
     RecyclerView.Adapter<ListaProdutosAdapter.ViewHolder>() {
     private val produtos = produtos.toMutableList();
 
-    class ViewHolder(private val binding: ProdutoItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(context: Context, private val binding: ProdutoItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        val imageLoader = ImageLoader.Builder(context)
+            .components {
+                if (Build.VERSION.SDK_INT >= 28) {
+                    add(ImageDecoderDecoder.Factory())
+                } else {
+                    add(GifDecoder.Factory())
+                }
+            }
+            .build()
+
         fun vincula(produto: Produto) {
             val nome = binding.produtoItemNome
             nome.text = produto.nome;
@@ -28,7 +43,26 @@ class ListaProdutosAdapter(private val context: Context, produtos: List<Produto>
             binding.produtoItemValor.text = valorFormatadoEmMoeda
             //binding.imageView.load("https://www.cleverfiles.com/howto/wp-content/uploads/2018/03/minion.jpg")
             //binding.imageView.load(R.drawable.imagem_padrao)
-            binding.imageView.load(produto.imagem)
+
+            val visibilidade = if (produto.imagem != null){
+                View.VISIBLE
+            }else{
+                View.GONE
+            }
+
+            Log.i("VISIVEl",visibilidade.toString())
+            Log.i("VISIVEl",View.VISIBLE.toString())
+            Log.i("GONE",View.GONE.toString())
+
+
+            binding.imageView.visibility = visibilidade
+
+            binding.imageView.load(produto.imagem, imageLoader) {
+                placeholder(R.drawable.imagem_padrao)
+                //fallback(R.drawable.erro)
+                error(R.drawable.erro)
+
+            }
 
         }
 
@@ -38,7 +72,7 @@ class ListaProdutosAdapter(private val context: Context, produtos: List<Produto>
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(context)
         val binding = ProdutoItemBinding.inflate(inflater, parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(context, binding)
 
     }
 
@@ -54,7 +88,7 @@ class ListaProdutosAdapter(private val context: Context, produtos: List<Produto>
     fun atualiza(buscaTodos: List<Produto>) {
         this.produtos.clear()
         this.produtos.addAll(buscaTodos)
-        Log.i("Chegou","daset mudou")
+        Log.i("Chegou", "daset mudou")
         notifyDataSetChanged()
     }
 
