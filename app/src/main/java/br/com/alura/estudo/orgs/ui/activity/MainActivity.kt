@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import br.com.alura.estudo.orgs.R
+import br.com.alura.estudo.orgs.dao.ProdutosDao
 import br.com.alura.estudo.orgs.model.Produto
 import br.com.alura.estudo.orgs.ui.adapter.ListaProdutosAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -19,6 +20,7 @@ class MainActivity:Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val dao = ProdutosDao()
 //        val nome: TextView = findViewById<TextView>(R.id.nome)
 //        nome.text = "Cesta de Futas"
 //
@@ -31,13 +33,7 @@ class MainActivity:Activity() {
         val recyclerView:RecyclerView = findViewById(R.id.recycler_view)
         recyclerView.adapter = ListaProdutosAdapter(
             context = this,
-            produtos = listOf(
-                Produto("nome","teste descricao", BigDecimal("9.99")),
-                Produto("nome 3","teste descricao 2",BigDecimal("19.99")),
-                Produto("nome 4","teste descricao 3",BigDecimal("29.99")),
-                Produto("nome 5","teste descricao 4",BigDecimal("39.99")),
-                Produto("nome 6","teste descricao 5",BigDecimal("59.99")),
-            )
+            produtos = dao.buscaTodos()
         )
 
         recyclerView.layoutManager = LinearLayoutManager(this,RecyclerView.VERTICAL,false)
