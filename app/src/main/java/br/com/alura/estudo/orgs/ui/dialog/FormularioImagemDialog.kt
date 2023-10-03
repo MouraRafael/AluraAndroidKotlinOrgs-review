@@ -23,20 +23,20 @@ class FormularioImagemDialog( val context: Context) {
         }
         .build()
 
-    fun mostra(){
-        val biding = FormularioImagemBinding.inflate(LayoutInflater.from(context));
+    fun mostra(quandoImagemCarregada:(textoUrl:String)->Unit){
+        val binding = FormularioImagemBinding.inflate(LayoutInflater.from(context));
 
-        biding.formularioImagemBotaoCarregar.setOnClickListener {
-            val url = biding.formularioImagemUrl.text.toString()
-            biding.formularioImagemImageview.tentaCarregarImagem(url,imageLoader)
+        binding.formularioImagemBotaoCarregar.setOnClickListener {
+            val url = binding.formularioImagemUrl.text.toString()
+            binding.formularioImagemImageview.tentaCarregarImagem(url,imageLoader)
         }
 
         AlertDialog.Builder(context)
-            .setView(biding.root)
+            .setView(binding.root)
             .setPositiveButton("ok", { _, _ ->
-                val  url = biding.formularioImagemUrl.text.toString()
+                val  url = binding.formularioImagemUrl.text.toString()
                 Log.i("URL",url)
-                //binding.activityFormularioProdutoImagem.tentaCarregarImagem(url,imageLoader)
+                quandoImagemCarregada(url)
             })
             .setNegativeButton("nop", { _, _ -> })
             .show()
