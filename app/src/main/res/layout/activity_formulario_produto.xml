@@ -5,5 +5,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activity.FormularioProdutoActivity">
+    <EditText
+        android:id="@+id/form_nome"
+        android:layout_width="0dp"
+        android:layout_margin="16dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:hint="nome"/>
+
+    <EditText
+        android:id="@+id/form_descricao"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="descricao"
+        app:layout_constraintEnd_toEndOf="@+id/form_nome"
+        app:layout_constraintStart_toStartOf="@+id/form_nome"
+        app:layout_constraintTop_toBottomOf="@id/form_nome" />
+
+    <EditText
+        android:id="@+id/form_valor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="valor"
+        app:layout_constraintEnd_toEndOf="@+id/form_nome"
+        app:layout_constraintStart_toStartOf="@+id/form_nome"
+        app:layout_constraintTop_toBottomOf="@id/form_descricao" />
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Salvar"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
