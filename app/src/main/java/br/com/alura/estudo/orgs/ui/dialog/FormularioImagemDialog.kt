@@ -23,22 +23,33 @@ class FormularioImagemDialog( val context: Context) {
         }
         .build()
 
-    fun mostra(quandoImagemCarregada:(textoUrl:String)->Unit){
-        val binding = FormularioImagemBinding.inflate(LayoutInflater.from(context));
+    fun mostra(url:String?=null,quandoImagemCarregada:(textoUrl:String)->Unit){
 
-        binding.formularioImagemBotaoCarregar.setOnClickListener {
-            val url = binding.formularioImagemUrl.text.toString()
-            binding.formularioImagemImageview.tentaCarregarImagem(url,imageLoader)
+
+        FormularioImagemBinding.inflate(LayoutInflater.from(context)).apply {
+            //carrega imagem se ja houver sido carregada antes
+            url?.let{
+                formularioImagemImageview.tentaCarregarImagem(url,imageLoader)
+                formularioImagemUrl.setText(it)
+            }
+            formularioImagemBotaoCarregar.setOnClickListener {
+                val url = formularioImagemUrl.text.toString()
+                formularioImagemImageview.tentaCarregarImagem(url,imageLoader)
+            }
+
+            AlertDialog.Builder(context)
+                .setView(root)
+                .setPositiveButton("ok", { _, _ ->
+                    val  url = formularioImagemUrl.text.toString()
+                    Log.i("URL",url)
+                    quandoImagemCarregada(url)
+                })
+                .setNegativeButton("nop", { _, _ -> })
+                .show()
         }
 
-        AlertDialog.Builder(context)
-            .setView(binding.root)
-            .setPositiveButton("ok", { _, _ ->
-                val  url = binding.formularioImagemUrl.text.toString()
-                Log.i("URL",url)
-                quandoImagemCarregada(url)
-            })
-            .setNegativeButton("nop", { _, _ -> })
-            .show()
+
+
+
     }
 }
