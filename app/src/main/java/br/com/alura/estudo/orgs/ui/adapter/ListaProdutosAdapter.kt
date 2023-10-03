@@ -1,6 +1,7 @@
 package br.com.alura.estudo.orgs.ui.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.alura.estudo.orgs.R
 import br.com.alura.estudo.orgs.model.Produto
 
-class ListaProdutosAdapter(private val context: Context, private val produtos: List<Produto>) :
+class ListaProdutosAdapter(private val context: Context, produtos: List<Produto>) :
     RecyclerView.Adapter<ListaProdutosAdapter.ViewHolder>() {
+    private val produtos = produtos.toMutableList();
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun vincula(produto: Produto) {
@@ -39,6 +41,13 @@ class ListaProdutosAdapter(private val context: Context, private val produtos: L
 
     override fun getItemCount(): Int {
         return produtos.size;
+    }
+
+    fun atualiza(buscaTodos: List<Produto>) {
+        this.produtos.clear()
+        this.produtos.addAll(buscaTodos)
+        Log.i("Chegou","daset mudou")
+        notifyDataSetChanged()
     }
 
 }

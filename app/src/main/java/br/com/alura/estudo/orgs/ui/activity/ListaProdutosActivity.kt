@@ -1,50 +1,51 @@
 package br.com.alura.estudo.orgs.ui.activity
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintSet.Layout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import br.com.alura.estudo.orgs.R
 import br.com.alura.estudo.orgs.dao.ProdutosDao
-import br.com.alura.estudo.orgs.model.Produto
 import br.com.alura.estudo.orgs.ui.adapter.ListaProdutosAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.math.BigDecimal
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+class ListaProdutosActivity : AppCompatActivity(R.layout.activity_lista_produtos) {
+    val dao = ProdutosDao()
+    private val adapter = ListaProdutosAdapter(
+        context = this,
+        produtos = dao.buscaTodos()
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        configuraRecyclerView()
+        configuraFab()
 
     }
 
     override fun onResume() {
         super.onResume()
-
-
-        val dao = ProdutosDao()
-
-        val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
-        recyclerView.adapter = ListaProdutosAdapter(
-            context = this,
-            produtos = dao.buscaTodos()
-        )
-
-        recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-
         //findViewById<TextView>(R.id.nome).setTextSize(TypedValue.COMPLEX_UNIT_SP,25.5f)
+        adapter.atualiza(dao.buscaTodos())
+    }
 
+    private fun configuraFab() {
         val fab = findViewById<FloatingActionButton>(R.id.floatingActionButton)
         fab.setOnClickListener {
-            val intent = Intent(this, FormularioProdutoActivity::class.java)
-            startActivity(intent)
+            vaiParaFormularioProduto()
 
         }
+    }
+
+    private fun vaiParaFormularioProduto() {
+        val intent = Intent(this, FormularioProdutoActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun configuraRecyclerView() {
+        val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
+        recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        recyclerView.adapter = adapter
     }
 }
 
