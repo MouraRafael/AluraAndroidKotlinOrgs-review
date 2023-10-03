@@ -3,6 +3,7 @@ package br.com.alura.estudo.orgs.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +27,12 @@ class ListaProdutosActivity : AppCompatActivity() {
         setContentView(binding.root)
         configuraRecyclerView()
         configuraFab()
+        AlertDialog.Builder(this)
+            .setTitle("titulo")
+            .setMessage("mensagem")
+            .setPositiveButton("ok",{_,_-> })
+            .setNegativeButton("nop",{_,_->})
+            .show()
 
     }
 
