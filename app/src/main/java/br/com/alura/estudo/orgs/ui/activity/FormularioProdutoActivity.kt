@@ -29,6 +29,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        title = "Cadastro de Produtos"
         val imageLoader = ImageLoader.Builder(this)
             .components {
                 if (Build.VERSION.SDK_INT >= 28) {
