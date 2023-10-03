@@ -1,6 +1,7 @@
 package br.com.alura.estudo.orgs.ui.activity
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintSet.Layout
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import br.com.alura.estudo.orgs.R
 import br.com.alura.estudo.orgs.model.Produto
 import br.com.alura.estudo.orgs.ui.adapter.ListaProdutosAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.math.BigDecimal
 
 class MainActivity:Activity() {
@@ -41,6 +43,13 @@ class MainActivity:Activity() {
         recyclerView.layoutManager = LinearLayoutManager(this,RecyclerView.VERTICAL,false)
 
         //findViewById<TextView>(R.id.nome).setTextSize(TypedValue.COMPLEX_UNIT_SP,25.5f)
+
+        val fab = findViewById<FloatingActionButton>(R.id.floatingActionButton)
+        fab.setOnClickListener {
+            val intent = Intent(this, FormularioProdutoActivity::class.java)
+            startActivity(intent)
+
+        }
 
     }
 }
