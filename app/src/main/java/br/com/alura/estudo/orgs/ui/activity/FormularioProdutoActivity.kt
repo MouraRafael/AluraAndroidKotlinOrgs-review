@@ -9,7 +9,9 @@ import androidx.appcompat.app.AlertDialog
 import br.com.alura.estudo.orgs.R
 import br.com.alura.estudo.orgs.dao.ProdutosDao
 import br.com.alura.estudo.orgs.databinding.ActivityFormularioProdutoBinding
+import br.com.alura.estudo.orgs.databinding.FormularioImagemBinding
 import br.com.alura.estudo.orgs.model.Produto
+import coil.load
 import java.math.BigDecimal
 
 class FormularioProdutoActivity : AppCompatActivity() {
@@ -17,30 +19,41 @@ class FormularioProdutoActivity : AppCompatActivity() {
     val binding by lazy {
         ActivityFormularioProdutoBinding.inflate(layoutInflater)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         configuraBotaoSalvar()
-        binding.activityFormularioProdutoImagem.setOnClickListener({
+        binding.activityFormularioProdutoImagem.setOnClickListener {
+            val bindingDoFormularioImagem = FormularioImagemBinding.inflate(layoutInflater);
+
+            bindingDoFormularioImagem.formularioImagemBotaoCarregar.setOnClickListener {
+                val url = bindingDoFormularioImagem.formularioImagemUrl.text.toString()
+                bindingDoFormularioImagem.formularioImagemImageview.load(url)
+            }
+
             AlertDialog.Builder(this)
-                .setView(R.layout.formulario_imagem)
-                .setPositiveButton("ok",{_,_-> })
-                .setNegativeButton("nop",{_,_->})
+                .setView(bindingDoFormularioImagem.root)
+                .setPositiveButton("ok", { _, _ ->
+                    val  url = bindingDoFormularioImagem.formularioImagemUrl.text.toString()
+                    binding.activityFormularioProdutoImagem.load(url)
+                })
+                .setNegativeButton("nop", { _, _ -> })
                 .show()
-        })
+        }
 
     }
 
     private fun configuraBotaoSalvar() {
-/*
-                botalSalvar.setOnClickListener(object : View.OnClickListener {
-                    override fun onClick(p0: View?) {
-                        val campoNome = findViewById<EditText>(R.id.form_nome)
-                        val nome = campoNome.text.toString();
-                        val botalSalvar:Button = findViewById(R.id.botao_salvar)
-                        Log.i("FormProduto","onCreate $nome")
-                    }
-                }) //Listener antigo*/
+        /*
+                        botalSalvar.setOnClickListener(object : View.OnClickListener {
+                            override fun onClick(p0: View?) {
+                                val campoNome = findViewById<EditText>(R.id.form_nome)
+                                val nome = campoNome.text.toString();
+                                val botalSalvar:Button = findViewById(R.id.botao_salvar)
+                                Log.i("FormProduto","onCreate $nome")
+                            }
+                        }) //Listener antigo*/
         val botalSalvar: Button = binding.botaoSalvar
         val dao = ProdutosDao();
         botalSalvar.setOnClickListener {

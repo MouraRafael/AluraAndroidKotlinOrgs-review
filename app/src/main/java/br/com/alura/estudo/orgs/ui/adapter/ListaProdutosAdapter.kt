@@ -26,7 +26,8 @@ class ListaProdutosAdapter(private val context: Context, produtos: List<Produto>
             val formatador: NumberFormat = NumberFormat.getCurrencyInstance(Locale("pt", "br"))
             val valorFormatadoEmMoeda: String = formatador.format(produto.preco)
             binding.produtoItemValor.text = valorFormatadoEmMoeda
-            binding.imageView.load("https://www.cleverfiles.com/howto/wp-content/uploads/2018/03/minion.jpg")
+            //binding.imageView.load("https://www.cleverfiles.com/howto/wp-content/uploads/2018/03/minion.jpg")
+            //binding.imageView.load(R.drawable.imagem_padrao)
 
         }
 
