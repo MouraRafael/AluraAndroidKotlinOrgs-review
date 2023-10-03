@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.alura.estudo.orgs.R
 import br.com.alura.estudo.orgs.databinding.ProdutoItemBinding
 import br.com.alura.estudo.orgs.model.Produto
+import coil.load
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -25,6 +26,7 @@ class ListaProdutosAdapter(private val context: Context, produtos: List<Produto>
             val formatador: NumberFormat = NumberFormat.getCurrencyInstance(Locale("pt", "br"))
             val valorFormatadoEmMoeda: String = formatador.format(produto.preco)
             binding.produtoItemValor.text = valorFormatadoEmMoeda
+            binding.imageView.load("https://www.cleverfiles.com/howto/wp-content/uploads/2018/03/minion.jpg")
 
         }
 
