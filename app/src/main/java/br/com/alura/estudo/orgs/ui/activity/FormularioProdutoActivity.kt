@@ -3,6 +3,7 @@ package br.com.alura.estudo.orgs.ui.activity
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -66,6 +67,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
         val botalSalvar: Button = binding.botaoSalvar
         val dao = ProdutosDao();
         botalSalvar.setOnClickListener {
+            binding.activityFormularioProdutoProgressBar.visibility = View.VISIBLE
             val produto = criaProduto()
             dao.adiciona(produto)
             finish()
