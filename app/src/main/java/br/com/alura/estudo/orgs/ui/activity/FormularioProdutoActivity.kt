@@ -67,9 +67,10 @@ class FormularioProdutoActivity : AppCompatActivity() {
         val botalSalvar: Button = binding.botaoSalvar
         val dao = ProdutosDao();
         botalSalvar.setOnClickListener {
-            binding.activityFormularioProdutoProgressBar.visibility = View.VISIBLE
+            binding.activityFormularioProdutoProgressBar.show()
             val produto = criaProduto()
             dao.adiciona(produto)
+            binding.activityFormularioProdutoProgressBar.hide()
             finish()
         }
     }
