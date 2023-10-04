@@ -32,7 +32,6 @@ class ListaProdutosActivity : AppCompatActivity() {
         val swipe = binding.activityListaProdutosSwipe;
         swipe.setOnRefreshListener {
             swipe.isRefreshing = false
-            dao.adiciona(Produto("Produto","valor", BigDecimal("12.95")))
             adapter.atualiza(dao.buscaTodos())
         }
 

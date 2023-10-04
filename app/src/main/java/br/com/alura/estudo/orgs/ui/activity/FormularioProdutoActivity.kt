@@ -90,10 +90,10 @@ class FormularioProdutoActivity : AppCompatActivity() {
         }
 
         return Produto(
-            nome,
-            descricao,
-            valor,
-            url
+            nome =nome,
+            descricao=descricao,
+            preco =valor,
+            imagem = url
         )
     }
 }
