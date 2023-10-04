@@ -52,6 +52,7 @@ dependencies {
 
     implementation("io.coil-kt:coil:2.4.0")
     implementation("io.coil-kt:coil-gif:2.4.0")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
 
 }

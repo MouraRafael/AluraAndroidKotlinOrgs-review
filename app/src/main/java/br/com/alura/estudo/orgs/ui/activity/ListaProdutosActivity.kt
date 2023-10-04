@@ -10,8 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.alura.estudo.orgs.R
 import br.com.alura.estudo.orgs.dao.ProdutosDao
 import br.com.alura.estudo.orgs.databinding.ActivityListaProdutosBinding
+import br.com.alura.estudo.orgs.model.Produto
 import br.com.alura.estudo.orgs.ui.adapter.ListaProdutosAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.math.BigDecimal
 
 class ListaProdutosActivity : AppCompatActivity() {
     val dao = ProdutosDao()
@@ -27,6 +29,12 @@ class ListaProdutosActivity : AppCompatActivity() {
         setContentView(binding.root)
         configuraRecyclerView()
         configuraFab()
+        val swipe = binding.activityListaProdutosSwipe;
+        swipe.setOnRefreshListener {
+            swipe.isRefreshing = false
+            dao.adiciona(Produto("Produto","valor", BigDecimal("12.95")))
+            adapter.atualiza(dao.buscaTodos())
+        }
 
     }
 
