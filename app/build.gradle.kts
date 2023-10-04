@@ -10,8 +10,8 @@ android {
 
     defaultConfig {
         applicationId = "br.com.alura.estudo.orgs"
-        minSdk = 22
-        targetSdk = 33
+        minSdk = 28
+        targetSdk = 29
         versionCode = 1
         versionName = "1.0"
 
@@ -28,15 +28,20 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = org.gradle.api.JavaVersion.VERSION_11
+        targetCompatibility = org.gradle.api.JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 }
 
 dependencies {
+
+    val roomVersion = "2.4.1"
+
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
