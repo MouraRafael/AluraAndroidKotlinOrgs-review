@@ -1,6 +1,7 @@
 package br.com.alura.estudo.orgs.ui.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import br.com.alura.estudo.orgs.R
 import br.com.alura.estudo.orgs.databinding.ProdutoItemBinding
 import br.com.alura.estudo.orgs.model.Produto
 import br.com.alura.estudo.orgs.tentaCarregarImagem
+import br.com.alura.estudo.orgs.ui.activity.DetalhesProdutoActivity
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
@@ -22,7 +24,7 @@ class ListaProdutosAdapter(private val context: Context, produtos: List<Produto>
     RecyclerView.Adapter<ListaProdutosAdapter.ViewHolder>() {
     private val produtos = produtos.toMutableList();
 
-    class ViewHolder(context: Context, private val binding: ProdutoItemBinding) :
+    class ViewHolder(private val context: Context, private val binding: ProdutoItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val imageLoader = ImageLoader.Builder(context)
             .components {
@@ -34,7 +36,18 @@ class ListaProdutosAdapter(private val context: Context, produtos: List<Produto>
             }
             .build()
 
+
+
+
         fun vincula(produto: Produto) {
+            itemView.setOnClickListener{
+                val intent = Intent(context, DetalhesProdutoActivity::class.java)
+                intent.putExtra("chave",produto)
+                context.startActivity(intent)
+
+            }
+
+
             val nome = binding.produtoItemNome
             nome.text = produto.nome;
 

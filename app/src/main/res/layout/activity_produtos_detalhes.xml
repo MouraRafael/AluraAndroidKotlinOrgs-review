@@ -46,7 +46,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/activity_detalhes_produto_imagem"
 
-            app:layout_constraintHorizontal_bias=".2"
+            app:layout_constraintHorizontal_bias="0"
             >
             <TextView
                 android:id="@+id/activity_detalhes_produto_valor"
