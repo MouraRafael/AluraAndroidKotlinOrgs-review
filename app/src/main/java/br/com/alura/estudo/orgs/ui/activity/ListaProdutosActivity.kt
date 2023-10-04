@@ -7,8 +7,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import br.com.alura.estudo.orgs.R
 import br.com.alura.estudo.orgs.dao.ProdutosDao
+import br.com.alura.estudo.orgs.database.AppDataBase
 import br.com.alura.estudo.orgs.databinding.ActivityListaProdutosBinding
 import br.com.alura.estudo.orgs.model.Produto
 import br.com.alura.estudo.orgs.ui.adapter.ListaProdutosAdapter
@@ -29,10 +31,27 @@ class ListaProdutosActivity : AppCompatActivity() {
         setContentView(binding.root)
         configuraRecyclerView()
         configuraFab()
+
+        val roomDb = Room.databaseBuilder(
+            this,
+            AppDataBase::class.java,
+            "orgs.db"
+        )
+            .allowMainThreadQueries()
+            .build()
+
+
+        val produtoDao = roomDb.dao()
+        produtoDao.salva(Produto(0,"Produto 1","Descricao1", BigDecimal("123.23")))
+        adapter.atualiza(produtoDao.pegaTodos())
+        val asdf = produtoDao.pegaTodos();
+        Log.i("RESULTADO PEGA TODOS", asdf.toString())
+
+
         val swipe = binding.activityListaProdutosSwipe;
         swipe.setOnRefreshListener {
             swipe.isRefreshing = false
-            adapter.atualiza(dao.buscaTodos())
+            adapter.atualiza(produtoDao.pegaTodos())
         }
 
     }
@@ -40,7 +59,7 @@ class ListaProdutosActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         //findViewById<TextView>(R.id.nome).setTextSize(TypedValue.COMPLEX_UNIT_SP,25.5f)
-        adapter.atualiza(dao.buscaTodos())
+
     }
 
     private fun configuraFab() {
