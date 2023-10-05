@@ -25,6 +25,8 @@ private const val CHAVE_PRODUTO = "chaveProduto"
 class DetalhesProdutoActivity : AppCompatActivity() {
 
     private lateinit var produto: Produto
+    private var idProduto: Long? = null
+    private val dao by lazy { AppDataBase.instanciar(this).dao() }
     private val binding by lazy {
         ActivityProdutosDetalhesBinding.inflate(layoutInflater)
     }
@@ -45,11 +47,16 @@ class DetalhesProdutoActivity : AppCompatActivity() {
 
         setContentView(binding.root)
         //supportActionBar?.hide()
-        intent.getParcelableExtra<Produto>("chave")?.let { produtoCarregado: Produto ->
-            produto = produtoCarregado
-            preencheCampos(produtoCarregado)
-        } ?: finish()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        intent.getParcelableExtra<Produto>("chave")?.let { produtoCarregado: Produto ->
+            idProduto = produtoCarregado.id
+        } ?: finish()
+        produto = idProduto?.let { dao.buscaPorId(it) }!!
+        preencheCampos(produto)
 
     }
 

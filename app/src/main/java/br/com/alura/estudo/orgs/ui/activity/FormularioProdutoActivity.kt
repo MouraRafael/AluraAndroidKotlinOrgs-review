@@ -42,6 +42,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
             url = it.imagem
             binding.activityFormularioNome.setText(it.nome)
             binding.activityFormularioDescricao.setText(it.descricao)
+            binding.activityFormularioValor.setText(it.preco.toString())
             binding.activityFormularioProdutoImagem.tentaCarregarImagem(it.imagem, imageLoader)
 
             title = "Editar Produto"
