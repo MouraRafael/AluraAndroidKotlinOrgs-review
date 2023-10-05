@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import br.com.alura.estudo.orgs.R
 import br.com.alura.estudo.orgs.databinding.ActivityProdutosDetalhesBinding
@@ -16,7 +17,9 @@ import coil.decode.ImageDecoderDecoder
 import java.text.NumberFormat
 import java.util.Locale
 
+private const val TAG = "DetalhesProduto"
 class DetalhesProdutoActivity:AppCompatActivity() {
+
     private val binding by lazy {
         ActivityProdutosDetalhesBinding.inflate(layoutInflater)
     }
@@ -53,6 +56,21 @@ class DetalhesProdutoActivity:AppCompatActivity() {
         //basicamente, infle o menu com o arquivo de menu e passe para o onCreateOptionsMenu
         menuInflater.inflate(R.menu.menu_editar,menu)
         return super.onCreateOptionsMenu(menu)
+
+    }
+
+    //Filtro para quando os itens do menu forem selecionados
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.menu_detalhes_produto_editar->{
+                Log.i(TAG,"onOptionsItemSelected Editar")
+            }
+            R.id.menu_detalhes_produto_excluir->{
+                Log.i(TAG,"onOptionsItemSelected Excluir")
+            }
+
+        }
+        return super.onOptionsItemSelected(item)
 
     }
 }
