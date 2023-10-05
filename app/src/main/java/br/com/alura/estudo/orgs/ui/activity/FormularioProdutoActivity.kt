@@ -19,10 +19,9 @@ class FormularioProdutoActivity : AppCompatActivity() {
     val binding by lazy {
         ActivityFormularioProdutoBinding.inflate(layoutInflater)
     }
-    private var url:String? = null
+    private var url: String? = null
 
     private var idProduto = 0L;
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,9 +33,10 @@ class FormularioProdutoActivity : AppCompatActivity() {
 
         intent.getParcelableExtra<Produto>("chaveProduto")?.let {
             idProduto = it.id
+            url = it.imagem
             binding.activityFormularioNome.setText(it.nome)
             binding.activityFormularioDescricao.setText(it.descricao)
-            binding.activityFormularioProdutoImagem.tentaCarregarImagem(it.imagem,imageLoader)
+            binding.activityFormularioProdutoImagem.tentaCarregarImagem(it.imagem, imageLoader)
 
             title = "Editar Produto"
 
@@ -47,10 +47,10 @@ class FormularioProdutoActivity : AppCompatActivity() {
         setContentView(binding.root)
         configuraBotaoSalvar()
         binding.activityFormularioProdutoImagem.setOnClickListener {
-            FormularioImagemDialog(this).mostra(url){urlImagem->
-                url=urlImagem
+            FormularioImagemDialog(this).mostra(url) { urlImagem ->
+                url = urlImagem
 
-                binding.activityFormularioProdutoImagem.tentaCarregarImagem(url,imageLoader)
+                binding.activityFormularioProdutoImagem.tentaCarregarImagem(url, imageLoader)
 
             }
         }
@@ -77,7 +77,12 @@ class FormularioProdutoActivity : AppCompatActivity() {
         botalSalvar.setOnClickListener {
             binding.activityFormularioProdutoProgressBar.show()
             val produto = criaProduto()
-            dao.salva(produto)
+            if (idProduto > 0) {
+                dao.atualiza(produto)
+            } else {
+                dao.salva(produto)
+
+            }
             binding.activityFormularioProdutoProgressBar.hide()
             finish()
         }
@@ -98,9 +103,10 @@ class FormularioProdutoActivity : AppCompatActivity() {
         }
 
         return Produto(
-            nome =nome,
-            descricao=descricao,
-            preco =valor,
+            id = idProduto,
+            nome = nome,
+            descricao = descricao,
+            preco = valor,
             imagem = url
         )
     }
