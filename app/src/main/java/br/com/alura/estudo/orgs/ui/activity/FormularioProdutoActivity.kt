@@ -31,7 +31,13 @@ class FormularioProdutoActivity : AppCompatActivity() {
         //Imageloader é usado para dar suporte a gifs animados
         val imageLoader = habilitaGIFs()
 
-        intent.getParcelableExtra<Produto>("chaveProduto")?.let {
+        val produto:Produto? =  if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.TIRAMISU){
+            intent.getParcelableExtra("chaveProduto",Produto::class.java)
+        }else{
+            intent.getParcelableExtra<Produto>("chaveProduto")
+        }
+
+        produto?.let {
             idProduto = it.id
             url = it.imagem
             binding.activityFormularioNome.setText(it.nome)

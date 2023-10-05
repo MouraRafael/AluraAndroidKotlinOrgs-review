@@ -76,7 +76,10 @@ class ListaProdutosActivity : AppCompatActivity() {
             startActivity(intent)
         }
         adapter.quandoClicaEmEditar = {
-            Log.i("TAG", "configuraRecyclerView: Editar $it")
+            Intent(this,FormularioProdutoActivity::class.java).apply {
+                putExtra("chaveProduto",it)
+                startActivity(this)
+            }
         }
         adapter.quandoClicaEmRemover = {
             dao.remove(it)
