@@ -3,31 +3,25 @@ package br.com.alura.estudo.orgs.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
 import br.com.alura.estudo.orgs.R
-import br.com.alura.estudo.orgs.dao.ProdutosDao
 import br.com.alura.estudo.orgs.database.AppDataBase
 import br.com.alura.estudo.orgs.databinding.ActivityListaProdutosBinding
-import br.com.alura.estudo.orgs.model.Produto
 import br.com.alura.estudo.orgs.ui.adapter.ListaProdutosAdapter
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.math.BigDecimal
 
 class ListaProdutosActivity : AppCompatActivity() {
-    val dao = ProdutosDao()
+
     val binding by lazy {
         ActivityListaProdutosBinding.inflate(layoutInflater)
     }
     private val adapter = ListaProdutosAdapter(
-        context = this,
-        produtos = dao.buscaTodos()
+        context = this
     )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        title = "Orgs Produtos"
         setContentView(binding.root)
         configuraRecyclerView()
         configuraFab()

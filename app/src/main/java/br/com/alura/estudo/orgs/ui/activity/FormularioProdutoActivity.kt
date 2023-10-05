@@ -4,7 +4,6 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import br.com.alura.estudo.orgs.dao.ProdutosDao
 import br.com.alura.estudo.orgs.database.AppDataBase
 import br.com.alura.estudo.orgs.databinding.ActivityFormularioProdutoBinding
 import br.com.alura.estudo.orgs.model.Produto

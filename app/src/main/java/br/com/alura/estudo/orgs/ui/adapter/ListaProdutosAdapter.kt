@@ -20,7 +20,7 @@ import coil.load
 import java.text.NumberFormat
 import java.util.Locale
 
-class ListaProdutosAdapter(private val context: Context, produtos: List<Produto>) :
+class ListaProdutosAdapter(private val context: Context, produtos: List<Produto> = emptyList()) :
     RecyclerView.Adapter<ListaProdutosAdapter.ViewHolder>() {
     private val produtos = produtos.toMutableList();
 
@@ -63,10 +63,6 @@ class ListaProdutosAdapter(private val context: Context, produtos: List<Produto>
             }else{
                 View.GONE
             }
-
-            Log.i("VISIVEl",visibilidade.toString())
-            Log.i("VISIVEl",View.VISIBLE.toString())
-            Log.i("GONE",View.GONE.toString())
 
 
             binding.imageView.visibility = visibilidade
