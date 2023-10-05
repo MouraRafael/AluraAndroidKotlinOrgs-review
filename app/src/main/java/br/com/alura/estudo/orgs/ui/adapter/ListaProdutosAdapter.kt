@@ -5,8 +5,10 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import br.com.alura.estudo.orgs.R
 import br.com.alura.estudo.orgs.databinding.ProdutoItemBinding
@@ -16,7 +18,6 @@ import br.com.alura.estudo.orgs.ui.activity.DetalhesProdutoActivity
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
-import coil.load
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -38,6 +39,26 @@ class ListaProdutosAdapter(private val context: Context, produtos: List<Produto>
 
 
 
+        fun mostraPopUp(v:View){
+            val popupMenu = PopupMenu(context,v)
+            val inflater:MenuInflater = popupMenu.menuInflater
+            inflater.inflate(R.menu.menu_editar,popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener {
+
+                when(it.itemId){
+                    R.id.menu_detalhes_produto_editar->{
+                        Log.i("DetalhesProduto","onOptionsItemSelected Editar")
+                        true
+                    }
+                    R.id.menu_detalhes_produto_excluir->{
+                        Log.i("DetalhesProduto","onOptionsItemSelected Excluir")
+                        true
+                    }
+                    else ->false
+                }
+            }
+            popupMenu.show()
+        }
 
         fun vincula(produto: Produto) {
             itemView.setOnClickListener{
@@ -46,6 +67,13 @@ class ListaProdutosAdapter(private val context: Context, produtos: List<Produto>
                 context.startActivity(intent)
 
             }
+
+            itemView.setOnLongClickListener{
+                mostraPopUp(itemView)
+
+                true
+            }
+
 
 
             val nome = binding.produtoItemNome

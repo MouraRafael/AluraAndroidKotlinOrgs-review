@@ -30,6 +30,8 @@ class ListaProdutosActivity : AppCompatActivity() {
 
     }
 
+
+
     override fun onResume() {
         super.onResume()
         val roomDb = AppDataBase.instanciar(this);

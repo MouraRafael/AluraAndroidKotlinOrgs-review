@@ -63,12 +63,12 @@ class DetalhesProdutoActivity:AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.menu_detalhes_produto_editar->{
-                Log.i(TAG,"onOptionsItemSelected Editar")
-                true
-            }
-            R.id.menu_detalhes_produto_excluir->{
-                Log.i(TAG,"onOptionsItemSelected Excluir")
-                true
+                    Log.i(TAG,"onOptionsItemSelected Editar")
+                    true
+                }
+                R.id.menu_detalhes_produto_excluir->{
+                    Log.i(TAG,"onOptionsItemSelected Excluir")
+                    true
             }
             else -> super.onOptionsItemSelected(item)
         }
