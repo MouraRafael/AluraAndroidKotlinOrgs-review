@@ -6,13 +6,14 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import br.com.alura.estudo.orgs.R
 import br.com.alura.estudo.orgs.database.AppDataBase
+import br.com.alura.estudo.orgs.database.dao.ProdutoDao
 import br.com.alura.estudo.orgs.databinding.ActivityListaProdutosBinding
 import br.com.alura.estudo.orgs.ui.adapter.ListaProdutosAdapter
 
 class ListaProdutosActivity : AppCompatActivity() {
 
+    private lateinit var dao: ProdutoDao
     val binding by lazy {
         ActivityListaProdutosBinding.inflate(layoutInflater)
     }
@@ -35,13 +36,13 @@ class ListaProdutosActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         val roomDb = AppDataBase.instanciar(this);
-        val produtoDao = roomDb.dao()
-        adapter.atualiza(produtoDao.pegaTodos())
+        dao = roomDb.dao()
+        adapter.atualiza(dao.pegaTodos())
 
         val swipe = binding.activityListaProdutosSwipe;
         swipe.setOnRefreshListener {
             swipe.isRefreshing = false
-            adapter.atualiza(produtoDao.pegaTodos())
+            adapter.atualiza(dao.pegaTodos())
         }
 
     }
@@ -78,7 +79,8 @@ class ListaProdutosActivity : AppCompatActivity() {
             Log.i("TAG", "configuraRecyclerView: Editar $it")
         }
         adapter.quandoClicaEmRemover = {
-            Log.i("TAG", "configuraRecyclerView: Remover $it")
+            dao.remove(it)
+            adapter.atualiza(dao.pegaTodos())
         }
     }
 }

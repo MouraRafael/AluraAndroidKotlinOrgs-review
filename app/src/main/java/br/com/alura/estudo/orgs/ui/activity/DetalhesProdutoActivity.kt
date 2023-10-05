@@ -1,5 +1,6 @@
 package br.com.alura.estudo.orgs.ui.activity
 
+import android.content.Intent
 import android.icu.number.NumberFormatter
 import android.os.Build
 import android.os.Bundle
@@ -19,6 +20,7 @@ import java.text.NumberFormat
 import java.util.Locale
 
 private const val TAG = "DetalhesProduto"
+private const val CHAVE_PRODUTO = "chaveProduto"
 
 class DetalhesProdutoActivity : AppCompatActivity() {
 
@@ -75,7 +77,10 @@ class DetalhesProdutoActivity : AppCompatActivity() {
             val dao = AppDataBase.instanciar(this).dao()
             when (item.itemId) {
                 R.id.menu_detalhes_produto_editar -> {
-                    Log.i(TAG, "onOptionsItemSelected Editar")
+                    Intent(this,FormularioProdutoActivity::class.java).apply {
+                        putExtra(CHAVE_PRODUTO,produto)
+                        startActivity(this)
+                    }
                 }
                 R.id.menu_detalhes_produto_excluir -> {
                     dao.remove(produto)

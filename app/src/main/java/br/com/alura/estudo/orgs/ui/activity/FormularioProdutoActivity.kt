@@ -21,24 +21,29 @@ class FormularioProdutoActivity : AppCompatActivity() {
     }
     private var url:String? = null
 
+    private var idProduto = 0L;
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         title = "Cadastro de Produtos"
 
         //Imageloader é usado para dar suporte a gifs animados
-        val imageLoader = ImageLoader.Builder(this)
-            .components {
-                if (Build.VERSION.SDK_INT >= 28) {
-                    add(ImageDecoderDecoder.Factory())
-                } else {
-                    add(GifDecoder.Factory())
-                }
-            }
-            .build()
+        val imageLoader = habilitaGIFs()
+
+        intent.getParcelableExtra<Produto>("chaveProduto")?.let {
+            idProduto = it.id
+            binding.activityFormularioNome.setText(it.nome)
+            binding.activityFormularioDescricao.setText(it.descricao)
+            binding.activityFormularioProdutoImagem.tentaCarregarImagem(it.imagem,imageLoader)
+
+            title = "Editar Produto"
+
+        }
 
 
-        super.onCreate(savedInstanceState)
+
         setContentView(binding.root)
         configuraBotaoSalvar()
         binding.activityFormularioProdutoImagem.setOnClickListener {
@@ -51,6 +56,16 @@ class FormularioProdutoActivity : AppCompatActivity() {
         }
 
     }
+
+    private fun habilitaGIFs() = ImageLoader.Builder(this)
+        .components {
+            if (Build.VERSION.SDK_INT >= 28) {
+                add(ImageDecoderDecoder.Factory())
+            } else {
+                add(GifDecoder.Factory())
+            }
+        }
+        .build()
 
     private fun configuraBotaoSalvar() {
         val botalSalvar: Button = binding.botaoSalvar
