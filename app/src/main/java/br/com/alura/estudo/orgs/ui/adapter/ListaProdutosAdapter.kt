@@ -6,6 +6,7 @@ import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
@@ -21,12 +22,39 @@ import coil.decode.ImageDecoderDecoder
 import java.text.NumberFormat
 import java.util.Locale
 
-class ListaProdutosAdapter(private val context: Context, produtos: List<Produto> = emptyList()) :
-    RecyclerView.Adapter<ListaProdutosAdapter.ViewHolder>() {
+class ListaProdutosAdapter(private val context: Context,
+                           produtos: List<Produto> = emptyList(),
+                           var quandoClicaNoItem: (produto: Produto) -> Unit = {},
+                           var quandoClicaEmEditar: (produto: Produto) -> Unit = {},
+                           var quandoClicaEmRemover: (produto: Produto) -> Unit = {}
+) :RecyclerView.Adapter<ListaProdutosAdapter.ViewHolder>() {
     private val produtos = produtos.toMutableList();
 
-    class ViewHolder(private val context: Context, private val binding: ProdutoItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val context: Context, private val binding: ProdutoItemBinding) :
+        RecyclerView.ViewHolder(binding.root),PopupMenu.OnMenuItemClickListener {
+
+        private lateinit var produto: Produto
+
+        init {
+            itemView.setOnClickListener{
+                if(::produto.isInitialized){
+                    quandoClicaNoItem(produto)
+                }
+            }
+            itemView.setOnLongClickListener {
+                PopupMenu(context,itemView).apply {
+                    menuInflater.inflate(R.menu.menu_editar,menu)
+                    setOnMenuItemClickListener(this@ViewHolder)
+                }.show()
+                true
+            }
+        }
+
+
+
+
+
+
         val imageLoader = ImageLoader.Builder(context)
             .components {
                 if (Build.VERSION.SDK_INT >= 28) {
@@ -39,42 +67,10 @@ class ListaProdutosAdapter(private val context: Context, produtos: List<Produto>
 
 
 
-        fun mostraPopUp(v:View){
-            val popupMenu = PopupMenu(context,v)
-            val inflater:MenuInflater = popupMenu.menuInflater
-            inflater.inflate(R.menu.menu_editar,popupMenu.menu)
-            popupMenu.setOnMenuItemClickListener {
 
-                when(it.itemId){
-                    R.id.menu_detalhes_produto_editar->{
-                        Log.i("DetalhesProduto","onOptionsItemSelected Editar")
-                        true
-                    }
-                    R.id.menu_detalhes_produto_excluir->{
-                        Log.i("DetalhesProduto","onOptionsItemSelected Excluir")
-                        true
-                    }
-                    else ->false
-                }
-            }
-            popupMenu.show()
-        }
 
         fun vincula(produto: Produto) {
-            itemView.setOnClickListener{
-                val intent = Intent(context, DetalhesProdutoActivity::class.java)
-                intent.putExtra("chave",produto)
-                context.startActivity(intent)
-
-            }
-
-            itemView.setOnLongClickListener{
-                mostraPopUp(itemView)
-
-                true
-            }
-
-
+            this.produto = produto
 
             val nome = binding.produtoItemNome
             nome.text = produto.nome;
@@ -97,6 +93,21 @@ class ListaProdutosAdapter(private val context: Context, produtos: List<Produto>
 
             binding.imageView.tentaCarregarImagem(produto.imagem, imageLoader)
 
+        }
+
+        override fun onMenuItemClick(item: MenuItem?): Boolean {
+            item?.let {
+                when (it.itemId) {
+                    R.id.menu_detalhes_produto_editar -> {
+                        quandoClicaEmEditar(produto)
+                    }
+                    R.id.menu_detalhes_produto_excluir -> {
+                        quandoClicaEmRemover(produto)
+                    }
+                }
+            }
+
+            return true
         }
 
     }

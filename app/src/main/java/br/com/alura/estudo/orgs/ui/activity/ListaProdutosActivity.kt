@@ -64,6 +64,22 @@ class ListaProdutosActivity : AppCompatActivity() {
         val recyclerView: RecyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recyclerView.adapter = adapter
+
+        adapter.quandoClicaNoItem = {
+            val intent = Intent(
+                this,
+                DetalhesProdutoActivity::class.java
+            ).apply {
+                putExtra("chave", it)
+            }
+            startActivity(intent)
+        }
+        adapter.quandoClicaEmEditar = {
+            Log.i("TAG", "configuraRecyclerView: Editar $it")
+        }
+        adapter.quandoClicaEmRemover = {
+            Log.i("TAG", "configuraRecyclerView: Remover $it")
+        }
     }
 }
 
