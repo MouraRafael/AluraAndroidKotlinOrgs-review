@@ -4,7 +4,9 @@ import android.icu.number.NumberFormatter
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
+import br.com.alura.estudo.orgs.R
 import br.com.alura.estudo.orgs.databinding.ActivityProdutosDetalhesBinding
 import br.com.alura.estudo.orgs.model.Produto
 import br.com.alura.estudo.orgs.tentaCarregarImagem
@@ -34,7 +36,7 @@ class DetalhesProdutoActivity:AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
-        supportActionBar?.hide()
+        //supportActionBar?.hide()
         val produto:Produto = intent.getParcelableExtra("chave")!!
 
         val precoFormatado = NumberFormat.getCurrencyInstance(Locale("pt", "br")).format(produto.preco)
@@ -44,6 +46,13 @@ class DetalhesProdutoActivity:AppCompatActivity() {
         binding.activityDetalhesProdutoDetalhes.text = produto.descricao
         binding.activityDetalhesProdutoImagem.tentaCarregarImagem(produto.imagem,imageLoader)
 
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        //basicamente, infle o menu com o arquivo de menu e passe para o onCreateOptionsMenu
+        menuInflater.inflate(R.menu.menu_editar,menu)
+        return super.onCreateOptionsMenu(menu)
 
     }
 }
