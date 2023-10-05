@@ -32,33 +32,21 @@ class ListaProdutosActivity : AppCompatActivity() {
         configuraRecyclerView()
         configuraFab()
 
-        val roomDb = Room.databaseBuilder(
-            this,
-            AppDataBase::class.java,
-            "orgs.db"
-        )
-            .allowMainThreadQueries()
-            .build()
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val roomDb = AppDataBase.instanciar(this);
         val produtoDao = roomDb.dao()
-        produtoDao.salva(Produto(0,"Produto 1","Descricao1", BigDecimal("123.23")))
         adapter.atualiza(produtoDao.pegaTodos())
-        val asdf = produtoDao.pegaTodos();
-        Log.i("RESULTADO PEGA TODOS", asdf.toString())
-
 
         val swipe = binding.activityListaProdutosSwipe;
         swipe.setOnRefreshListener {
             swipe.isRefreshing = false
             adapter.atualiza(produtoDao.pegaTodos())
         }
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        //findViewById<TextView>(R.id.nome).setTextSize(TypedValue.COMPLEX_UNIT_SP,25.5f)
 
     }
 

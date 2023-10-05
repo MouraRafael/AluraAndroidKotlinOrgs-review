@@ -1,23 +1,18 @@
 package br.com.alura.estudo.orgs.ui.activity
 
 import android.os.Build
-import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import br.com.alura.estudo.orgs.dao.ProdutosDao
+import br.com.alura.estudo.orgs.database.AppDataBase
 import br.com.alura.estudo.orgs.databinding.ActivityFormularioProdutoBinding
-import br.com.alura.estudo.orgs.databinding.FormularioImagemBinding
 import br.com.alura.estudo.orgs.model.Produto
 import br.com.alura.estudo.orgs.tentaCarregarImagem
 import br.com.alura.estudo.orgs.ui.dialog.FormularioImagemDialog
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
-import coil.imageLoader
-import coil.load
 import java.math.BigDecimal
 
 class FormularioProdutoActivity : AppCompatActivity() {
@@ -31,6 +26,8 @@ class FormularioProdutoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         title = "Cadastro de Produtos"
+
+        //Imageloader é usado para dar suporte a gifs animados
         val imageLoader = ImageLoader.Builder(this)
             .components {
                 if (Build.VERSION.SDK_INT >= 28) {
@@ -40,6 +37,8 @@ class FormularioProdutoActivity : AppCompatActivity() {
                 }
             }
             .build()
+
+
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         configuraBotaoSalvar()
@@ -55,21 +54,16 @@ class FormularioProdutoActivity : AppCompatActivity() {
     }
 
     private fun configuraBotaoSalvar() {
-        /*
-                        botalSalvar.setOnClickListener(object : View.OnClickListener {
-                            override fun onClick(p0: View?) {
-                                val campoNome = findViewById<EditText>(R.id.form_nome)
-                                val nome = campoNome.text.toString();
-                                val botalSalvar:Button = findViewById(R.id.botao_salvar)
-                                Log.i("FormProduto","onCreate $nome")
-                            }
-                        }) //Listener antigo*/
         val botalSalvar: Button = binding.botaoSalvar
-        val dao = ProdutosDao();
+
+        val dao = AppDataBase.instanciar(this).dao()
+
+
+
         botalSalvar.setOnClickListener {
             binding.activityFormularioProdutoProgressBar.show()
             val produto = criaProduto()
-            dao.adiciona(produto)
+            dao.salva(produto)
             binding.activityFormularioProdutoProgressBar.hide()
             finish()
         }
