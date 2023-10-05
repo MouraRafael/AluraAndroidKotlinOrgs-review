@@ -61,16 +61,18 @@ class DetalhesProdutoActivity:AppCompatActivity() {
 
     //Filtro para quando os itens do menu forem selecionados
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        return when(item.itemId){
             R.id.menu_detalhes_produto_editar->{
                 Log.i(TAG,"onOptionsItemSelected Editar")
+                true
             }
             R.id.menu_detalhes_produto_excluir->{
                 Log.i(TAG,"onOptionsItemSelected Excluir")
+                true
             }
-
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
+
 
     }
 }
