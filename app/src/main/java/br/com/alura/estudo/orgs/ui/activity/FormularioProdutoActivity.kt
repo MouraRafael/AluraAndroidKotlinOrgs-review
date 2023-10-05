@@ -32,9 +32,9 @@ class FormularioProdutoActivity : AppCompatActivity() {
         val imageLoader = habilitaGIFs()
 
         val produto:Produto? =  if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.TIRAMISU){
-            intent.getParcelableExtra("chaveProduto",Produto::class.java)
+            intent.getParcelableExtra(CHAVE_PRODUTO,Produto::class.java)
         }else{
-            intent.getParcelableExtra<Produto>("chaveProduto")
+            intent.getParcelableExtra<Produto>(CHAVE_PRODUTO)
         }
 
         produto?.let {

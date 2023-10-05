@@ -20,7 +20,7 @@ import java.text.NumberFormat
 import java.util.Locale
 
 private const val TAG = "DetalhesProduto"
-private const val CHAVE_PRODUTO = "chaveProduto"
+
 
 class DetalhesProdutoActivity : AppCompatActivity() {
 

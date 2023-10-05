@@ -77,7 +77,7 @@ class ListaProdutosActivity : AppCompatActivity() {
         }
         adapter.quandoClicaEmEditar = {
             Intent(this,FormularioProdutoActivity::class.java).apply {
-                putExtra("chaveProduto",it)
+                putExtra(CHAVE_PRODUTO_ID,it.id)
                 startActivity(this)
             }
         }

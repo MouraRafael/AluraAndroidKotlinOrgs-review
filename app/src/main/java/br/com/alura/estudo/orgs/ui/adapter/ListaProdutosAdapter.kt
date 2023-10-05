@@ -1,11 +1,9 @@
 package br.com.alura.estudo.orgs.ui.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +13,6 @@ import br.com.alura.estudo.orgs.R
 import br.com.alura.estudo.orgs.databinding.ProdutoItemBinding
 import br.com.alura.estudo.orgs.model.Produto
 import br.com.alura.estudo.orgs.tentaCarregarImagem
-import br.com.alura.estudo.orgs.ui.activity.DetalhesProdutoActivity
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
