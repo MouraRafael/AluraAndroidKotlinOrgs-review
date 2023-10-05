@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_lista_item_nome_asc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="nome asc" />
+    <item
+        android:id="@+id/menu_lista_item_nome_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="nome desc" />
+    <item
+        android:id="@+id/menu_lista_item_descricao_asc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="descricao asc" />
+    <item
+        android:id="@+id/menu_lista_item_descricao_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="descricao desc" />
+    <item
+        android:id="@+id/menu_lista_item_valor_asc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="preco asc" />
+    <item
+        android:id="@+id/menu_lista_item_valor_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="preco desc" />
+    <item
+        android:id="@+id/menu_lista_item_sem_ordem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Ordem padrão" />
+
+
+</menu>

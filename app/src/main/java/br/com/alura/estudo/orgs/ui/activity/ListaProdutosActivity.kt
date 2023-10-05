@@ -3,9 +3,12 @@ package br.com.alura.estudo.orgs.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import br.com.alura.estudo.orgs.R
 import br.com.alura.estudo.orgs.database.AppDataBase
 import br.com.alura.estudo.orgs.database.dao.ProdutoDao
 import br.com.alura.estudo.orgs.databinding.ActivityListaProdutosBinding
@@ -85,6 +88,28 @@ class ListaProdutosActivity : AppCompatActivity() {
             dao.remove(it)
             adapter.atualiza(dao.pegaTodos())
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_lista,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.menu_lista_item_nome_asc->{
+                adapter.atualiza(dao.buscaTodosOrdenadorPorNomeAsc())
+            }
+            R.id.menu_lista_item_nome_desc->{adapter.atualiza(dao.buscaTodosOrdenadorPorNomeDesc())}
+            R.id.menu_lista_item_descricao_asc->{adapter.atualiza(dao.buscaTodosOrdenadorPorDescricaoAsc())}
+            R.id.menu_lista_item_descricao_desc->{adapter.atualiza(dao.buscaTodosOrdenadorPorDescricaoDesc())}
+            R.id.menu_lista_item_valor_asc->{adapter.atualiza(dao.buscaTodosOrdenadorPorValorAsc())}
+            R.id.menu_lista_item_valor_desc->{adapter.atualiza(dao.buscaTodosOrdenadorPorValorDesc())}
+            R.id.menu_lista_item_sem_ordem->{adapter.atualiza(dao.pegaTodos())}
+
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }
 
