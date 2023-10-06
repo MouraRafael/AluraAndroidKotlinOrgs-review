@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.alura.estudo.orgs.R
@@ -13,16 +14,26 @@ import br.com.alura.estudo.orgs.database.AppDataBase
 import br.com.alura.estudo.orgs.database.dao.ProdutoDao
 import br.com.alura.estudo.orgs.databinding.ActivityListaProdutosBinding
 import br.com.alura.estudo.orgs.ui.adapter.ListaProdutosAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlin.math.log
 
 class ListaProdutosActivity : AppCompatActivity() {
 
-    private lateinit var dao: ProdutoDao
+    private  val dao by lazy {
+        AppDataBase.instanciar(this).dao()
+    }
     val binding by lazy {
         ActivityListaProdutosBinding.inflate(layoutInflater)
     }
     private val adapter = ListaProdutosAdapter(
         context = this
     )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         title = "Orgs Produtos"
@@ -30,30 +41,58 @@ class ListaProdutosActivity : AppCompatActivity() {
         configuraRecyclerView()
         configuraFab()
 
+//        val fluxoDeNumeros = flow<Int> {
+//            repeat(100) {
+//                emit(it)
+//                delay(1000)
+//            }
+//
+//        }
+//        lifecycleScope.launch {
+//            fluxoDeNumeros.collect {numero ->
+//                Log.i("GERADOR",numero.toString())
+//
+//            }
+//        }
 
 
-    }
+        lifecycleScope.launch {
+            val lista = withContext(Dispatchers.IO) {
+                dao.pegaTodos()
+            }
+            lista.collect {
+                adapter.atualiza(it)
 
+            }
 
-
-    override fun onResume() {
-        super.onResume()
-        val roomDb = AppDataBase.instanciar(this);
-        dao = roomDb.dao()
-        adapter.atualiza(dao.pegaTodos())
+        }
 
         val swipe = binding.activityListaProdutosSwipe;
         swipe.setOnRefreshListener {
             swipe.isRefreshing = false
-            adapter.atualiza(dao.pegaTodos())
+            lifecycleScope.launch {
+                val lista = withContext(Dispatchers.IO) {
+                    dao.pegaTodos().collect { produtos ->
+                        adapter.atualiza(produtos)
+                    }
+                }
+
+
+            }
         }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+
 
     }
 
     private fun configuraFab() {
         val fab = binding.activityListaProdutosFab
         fab.setOnClickListener {
-            Log.i("FAB","CLicado")
+            Log.i("FAB", "CLicado")
             vaiParaFormularioProduto()
 
         }
@@ -79,33 +118,63 @@ class ListaProdutosActivity : AppCompatActivity() {
             startActivity(intent)
         }
         adapter.quandoClicaEmEditar = {
-            Intent(this,FormularioProdutoActivity::class.java).apply {
-                putExtra(CHAVE_PRODUTO_ID,it.id)
+            Intent(this, FormularioProdutoActivity::class.java).apply {
+                putExtra(CHAVE_PRODUTO_ID, it.id)
                 startActivity(this)
             }
         }
         adapter.quandoClicaEmRemover = {
-            dao.remove(it)
-            adapter.atualiza(dao.pegaTodos())
+            lifecycleScope.launch {
+                dao.remove(it)
+                val lista = dao.pegaTodos().collect {
+                    adapter.atualiza(it)
+
+                }
+
+            }
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_lista,menu)
+        menuInflater.inflate(R.menu.menu_lista, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.menu_lista_item_nome_asc->{
+        when (item.itemId) {
+            R.id.menu_lista_item_nome_asc -> {
                 adapter.atualiza(dao.buscaTodosOrdenadorPorNomeAsc())
             }
-            R.id.menu_lista_item_nome_desc->{adapter.atualiza(dao.buscaTodosOrdenadorPorNomeDesc())}
-            R.id.menu_lista_item_descricao_asc->{adapter.atualiza(dao.buscaTodosOrdenadorPorDescricaoAsc())}
-            R.id.menu_lista_item_descricao_desc->{adapter.atualiza(dao.buscaTodosOrdenadorPorDescricaoDesc())}
-            R.id.menu_lista_item_valor_asc->{adapter.atualiza(dao.buscaTodosOrdenadorPorValorAsc())}
-            R.id.menu_lista_item_valor_desc->{adapter.atualiza(dao.buscaTodosOrdenadorPorValorDesc())}
-            R.id.menu_lista_item_sem_ordem->{adapter.atualiza(dao.pegaTodos())}
+
+            R.id.menu_lista_item_nome_desc -> {
+                adapter.atualiza(dao.buscaTodosOrdenadorPorNomeDesc())
+            }
+
+            R.id.menu_lista_item_descricao_asc -> {
+                adapter.atualiza(dao.buscaTodosOrdenadorPorDescricaoAsc())
+            }
+
+            R.id.menu_lista_item_descricao_desc -> {
+                adapter.atualiza(dao.buscaTodosOrdenadorPorDescricaoDesc())
+            }
+
+            R.id.menu_lista_item_valor_asc -> {
+                adapter.atualiza(dao.buscaTodosOrdenadorPorValorAsc())
+            }
+
+            R.id.menu_lista_item_valor_desc -> {
+                adapter.atualiza(dao.buscaTodosOrdenadorPorValorDesc())
+            }
+
+            R.id.menu_lista_item_sem_ordem -> {
+                lifecycleScope.launch {
+                    val lista = dao.pegaTodos().collect{
+                        adapter.atualiza(it)
+                    }
+
+
+                }
+            }
 
         }
 

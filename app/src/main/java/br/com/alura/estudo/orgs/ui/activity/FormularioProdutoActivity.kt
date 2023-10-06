@@ -2,6 +2,7 @@ package br.com.alura.estudo.orgs.ui.activity
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import br.com.alura.estudo.orgs.database.AppDataBase
@@ -87,6 +88,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
             if (idProduto > 0) {
                 dao.atualiza(produto)
             } else {
+                Log.i("BOTAO","Botaaao salvar")
                 dao.salva(produto)
 
             }
